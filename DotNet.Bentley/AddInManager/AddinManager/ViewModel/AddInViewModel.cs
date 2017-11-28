@@ -11,23 +11,50 @@ using Microsoft.Win32;
 using Mono.Cecil;
 using System.IO;
 using AddInManager.Model;
+using AddinManager.Helper;
 
 namespace AddInManager.ViewModel
 {
-    [Notifier]
     class AddInViewModel : ViewModelBase
     {
-        public ObservableCollection<AddInModel> Models { get; set; }
+        private ObservableCollection<AddInModel> m_Models;
+        private AddInModel m_SelectedModel;
 
-        public AddInModel SelectedModel { get; set; }
+        public ObservableCollection<AddInModel> Models
+        {
+            get
+            {
+                return m_Models;
+            }
 
-        public RelayCommand Run { get; set; }
+            set
+            {
+                m_Models = value;
+                this.RaisePropertyChanged(nameof(Models));
+            }
+        }
 
-        public RelayCommand Load { get; set; }
+        public AddInModel SelectedModel
+        {
+            get
+            {
+                return m_SelectedModel;
+            }
 
-        public RelayCommand Remove { get; set; }
+            set
+            {
+                m_SelectedModel = value;
+                this.RaisePropertyChanged(nameof(SelectedModel));
+            }
+        }
 
-        public RelayCommand ClosedEvent { get; set; }
+        public RelayCommand Run { get; private set; }
+
+        public RelayCommand Load { get; private set; }
+
+        public RelayCommand Remove { get; private set; }
+
+        public RelayCommand ClosedEvent { get; private set; }
 
         public AddInViewModel()
         {
@@ -52,7 +79,7 @@ namespace AddInManager.ViewModel
             {
                 var models = AddinAssemblyModel.Converter(Models);
 
-                var json = DotNet.Json.JsonConvert.SerializeObject(models);
+                var json = JsonHelper.SerializeObject(models);
 
                 File.WriteAllText(GlobalHelper.AddInManagerAssemblyFile, json);
             }
@@ -71,14 +98,14 @@ namespace AddInManager.ViewModel
                 return;
             }
 
-            var xml = File.ReadAllText(GlobalHelper.AddInManagerAssemblyFile);
+            var json = File.ReadAllText(GlobalHelper.AddInManagerAssemblyFile);
 
-            if (string.IsNullOrEmpty(xml))
+            if (string.IsNullOrEmpty(json))
             {
                 return;
             }
 
-            var models = DotNet.Json.JsonConvert.DeserializeObject<List<AddinAssemblyModel>>(xml);
+            var models = JsonHelper.DeserializeObject<List<AddinAssemblyModel>>(json);
 
             if (models == null || models.Count == 0)
             {
