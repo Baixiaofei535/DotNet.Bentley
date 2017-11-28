@@ -4,18 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:vp="clr-namespace:DotNet.MVVM.ViewHelper;assembly=DotNet.MVVM"
+             xmlns:vp="clr-namespace:AddinManager.MVVM"
              xmlns:local="clr-namespace:AddinManager.View"
              mc:Ignorable="d" 
-             Height="320" Width="420">
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <vp:EventCommandHelper Command="{Binding LoadedEvent}"></vp:EventCommandHelper>
-        </i:EventTrigger>
-        <i:EventTrigger EventName="Closed">
-            <vp:EventCommandHelper Command="{Binding ClosedEvent}"></vp:EventCommandHelper>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
+             Height="320" Width="420" Closed="OnClosed" Loaded="OnLoaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

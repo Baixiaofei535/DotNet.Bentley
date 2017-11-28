@@ -38,20 +38,14 @@
       <HintPath>D:\Program Files (x86)\Bentley\MicroStation V8i (SELECTseries)\MicroStation\mdlapps\bentley.microstation.interfaces.1.0.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DotNet.MVVM">
-      <HintPath>..\packs\DotNet.MVVM\net35\DotNet.MVVM.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>..\packs\Mono.Cecil\net35\Mono.Cecil.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packs\DotNet.MVVM\net35\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packs\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -78,14 +72,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\MainAddinManager.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <Import Project="..\AddinManager\AddinManager.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <UsingTask TaskName="DotNet.MSBuild.NotificationWeaverBuildTask" AssemblyFile="..\MSBuild\DotNet.MSBuild.dll" />
-  <Target Name="AfterBuild">
-    <NotificationWeaverBuildTask TargetPath="$(TargetPath)" DebugMode="True" />
-  </Target>
 </Project>

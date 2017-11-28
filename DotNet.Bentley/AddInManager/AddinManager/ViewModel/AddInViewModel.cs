@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DotNet.MVVM.Model;
-using DotNet.MVVM;
 using System.Collections.ObjectModel;
 using AddInManager.Helper;
 using System.Windows.Input;
 using System.Reflection;
 using Microsoft.Win32;
-using Mono.Cecil;
 using System.IO;
 using AddInManager.Model;
-using AddinManager.Helper;
 
 namespace AddInManager.ViewModel
 {
-    class AddInViewModel : ViewModelBase
+    class AddInViewModel : AddinManager.MVVM.ObservableObject
     {
         private ObservableCollection<AddInModel> m_Models;
         private AddInModel m_SelectedModel;
@@ -48,71 +44,19 @@ namespace AddInManager.ViewModel
             }
         }
 
-        public RelayCommand Run { get; private set; }
+        public AddinManager.MVVM.RelayCommand Run { get; private set; }
 
-        public RelayCommand Load { get; private set; }
+        public AddinManager.MVVM.RelayCommand Load { get; private set; }
 
-        public RelayCommand Remove { get; private set; }
-
-        public RelayCommand ClosedEvent { get; private set; }
+        public AddinManager.MVVM.RelayCommand Remove { get; private set; }
 
         public AddInViewModel()
         {
             this.Models = new ObservableCollection<AddInModel>();
 
-            this.Run = new RelayCommand(OnRun, () => SelectedModel != null && (SelectedModel.Childs == null || SelectedModel.Childs.Count == 0));
-            this.Load = new RelayCommand(OnLoad);
-            this.Remove = new RelayCommand(OnRemove, () => SelectedModel != null);
-
-            this.LoadedEvent = new RelayCommand(OnLoaded);
-            this.ClosedEvent = new RelayCommand(OnClosed);
-        }
-
-        private void OnClosed()
-        {
-            if (Models.Count == 0)
-            {
-                return;
-            }
-
-            try
-            {
-                var models = AddinAssemblyModel.Converter(Models);
-
-                var json = JsonHelper.SerializeObject(models);
-
-                File.WriteAllText(GlobalHelper.AddInManagerAssemblyFile, json);
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
-
-        private void OnLoaded()
-        {
-            GlobalHelper.DeleteTemp();
-
-            if (!File.Exists(GlobalHelper.AddInManagerAssemblyFile))
-            {
-                return;
-            }
-
-            var json = File.ReadAllText(GlobalHelper.AddInManagerAssemblyFile);
-
-            if (string.IsNullOrEmpty(json))
-            {
-                return;
-            }
-
-            var models = JsonHelper.DeserializeObject<List<AddinAssemblyModel>>(json);
-
-            if (models == null || models.Count == 0)
-            {
-                return;
-            }
-
-            this.Models = AddinAssemblyModel.Converter(models);
+            this.Run = new AddinManager.MVVM.RelayCommand(OnRun, () => SelectedModel != null && (SelectedModel.Childs == null || SelectedModel.Childs.Count == 0));
+            this.Load = new AddinManager.MVVM.RelayCommand(OnLoad);
+            this.Remove = new AddinManager.MVVM.RelayCommand(OnRemove, () => SelectedModel != null);
         }
 
         private void OnRemove()
@@ -143,37 +87,52 @@ namespace AddInManager.ViewModel
             {
                 var file = openFileDialog.FileName;
 
-                var assembly = AssemblyDefinition.ReadAssembly(file);
+                var assemblyResolveHelper = default(AssemblyResolveHelper);
 
-                var types = assembly.Modules[0].Types.Where(x => x.HasInterfaces
-                                                              && x.Interfaces.Any(n => n.FullName == typeof(ICommand).FullName))
-                                                     .ToList();
-
-                if (types.Count == 0)
+                try
                 {
-                    return;
-                }
+                    assemblyResolveHelper = new AssemblyResolveHelper();
 
-                var addin = Models.FirstOrDefault(x => x.Name == assembly.Name.Name);
+                    var assembly = assemblyResolveHelper.Registered(file);
 
-                if (addin != null)
-                {
-                    Models.Remove(addin);
-                }
-
-                var model = new AddInModel() { Name = assembly.Name.Name, Path = file };
-
-                foreach (var item in types)
-                {
-                    model.Childs.Add(new AddInModel()
+                    if (assembly == null)
                     {
-                        Name = item.FullName,
-                        Path = file,
-                        Parent = model
-                    });
-                }
+                        System.Windows.MessageBox.Show("Assembly is resolve fail , please check if the dependencies are missing !");
+                        return;
+                    }
 
-                Models.Add(model);
+                    var types = assembly.GetExportedTypes().Where(x => x.GetInterface(typeof(ICommand).FullName) != null).ToList();
+
+                    if (types.Count == 0)
+                    {
+                        return;
+                    }
+
+                    var addin = Models.FirstOrDefault(x => x.Name == assembly.GetName().Name);
+
+                    if (addin != null)
+                    {
+                        Models.Remove(addin);
+                    }
+
+                    var model = new AddInModel() { Name = assembly.GetName().Name, Path = file };
+
+                    foreach (var item in types)
+                    {
+                        model.Childs.Add(new AddInModel()
+                        {
+                            Name = item.FullName,
+                            Path = file,
+                            Parent = model
+                        });
+                    }
+
+                    Models.Add(model);
+                }
+                finally
+                {
+                    assemblyResolveHelper?.UnRegistered();
+                }
             }
         }
 
@@ -219,7 +178,7 @@ namespace AddInManager.ViewModel
                     return;
                 }
 
-                Messenger.Default.Send(this, "Closed.Token");
+                AddinManager.MVVM.Messenger.Default.Send(this, "Closed.Token");
 
                 var instance = ctor.Invoke(null);
 

@@ -38,19 +38,15 @@
       <HintPath>D:\Program Files\Bentley\MicroStation CONNECT Edition\MicroStation\Assemblies\Bentley.MicroStation.Interfaces.1.0.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DotNet.MVVM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packs\DotNet.MVVM\net45\DotNet.MVVM.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>..\packs\Mono.Cecil\net35\Mono.Cecil.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Program Files\Bentley\MicroStation CONNECT Edition\MicroStation\Assemblies\Telerik\System.Windows.Interactivity.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -85,8 +81,4 @@
   </ItemGroup>
   <Import Project="..\AddinManager\AddinManager.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <UsingTask TaskName="DotNet.MSBuild.NotificationWeaverBuildTask" AssemblyFile="..\MSBuild\DotNet.MSBuild.dll" />
-  <Target Name="AfterBuild">
-    <NotificationWeaverBuildTask TargetPath="$(TargetPath)" DebugMode="True" />
-  </Target>
 </Project>

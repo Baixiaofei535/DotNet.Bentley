@@ -1,19 +1,16 @@
-﻿using DotNet.MVVM.Model;
-using DotNet.MVVM;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Runtime.Serialization;
 
 namespace AddInManager.Model
 {
-    public class AddInModel : ObservableObject
+    class AddInModel : AddinManager.MVVM.ObservableObject
     {
         private AddInModel m_Parent;
         private string m_Name;
         private string m_Path;
         private bool m_IsExpand;
         private ObservableCollection<AddInModel> m_Childs;
-        private MethodInfo m_Method;
 
         public AddInModel Parent
         {
@@ -85,19 +82,6 @@ namespace AddInManager.Model
             }
         }
 
-        public MethodInfo Method
-        {
-            get
-            {
-                return m_Method;
-            }
-
-            set
-            {
-                m_Method = value;
-                this.RaisePropertyChanged(nameof(Method));
-            }
-        }
 
         public AddInModel()
         {

@@ -7,7 +7,7 @@ namespace AddInManager.Model
     /// <summary>
     /// AddinAssemblyModel
     /// </summary>
-    public class AddinAssemblyModel
+    class AddinAssemblyModel
     {
         /// <summary>
         /// 路径
@@ -24,6 +24,72 @@ namespace AddInManager.Model
         public AddinAssemblyModel()
         {
             this.Types = new List<string>();
+        }
+
+        /// <summary>
+        /// Writes the file.
+        /// </summary>
+        public static void WriteModels(List<AddinAssemblyModel> model)
+        {
+            var array = new string[model.Count];
+
+            foreach (var item in model)
+            {
+                var builder = new System.Text.StringBuilder();
+
+                builder.Append(item.Path);
+
+                foreach (var type in item.Types)
+                {
+                    builder.Append(string.Format(";{0}", type));
+                }
+
+                array[0] = builder.ToString();
+            }
+
+            File.WriteAllLines(Helper.GlobalHelper.AddInManagerAssemblyFile, array);
+        }
+
+        /// <summary>
+        /// Reads the models.
+        /// </summary>
+        /// <returns></returns>
+        public static List<AddinAssemblyModel> ReadModels()
+        {
+            var result = new List<AddinAssemblyModel>();
+
+            if (!File.Exists(Helper.GlobalHelper.AddInManagerAssemblyFile))
+            {
+                return result;
+            }
+
+            var array = File.ReadAllLines(Helper.GlobalHelper.AddInManagerAssemblyFile);
+
+            if (array.Length == 0)
+            {
+                return result;
+            }
+
+            foreach (var item in array)
+            {
+                var sp = item.Split(new char[] { ';' }, System.StringSplitOptions.RemoveEmptyEntries);
+
+                if (sp.Length < 2)
+                {
+                    continue;
+                }
+
+                var model = new AddinAssemblyModel() { Path = sp[0].Trim() };
+
+                for (int i = 1; i < sp.Length; i++)
+                {
+                    model.Types.Add(sp[i].Trim());
+                }
+
+                result.Add(model);
+            }
+
+            return result;
         }
 
         /// <summary>

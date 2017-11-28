@@ -1,7 +1,9 @@
-﻿using AddInManager.ViewModel;
-using DotNet.MVVM.Model;
+﻿using AddInManager.Helper;
+using AddInManager.Model;
+using AddInManager.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,9 +27,52 @@ namespace AddinManager.View
         public MainAddinManager()
         {
             InitializeComponent();
-
             this.DataContext = new AddInViewModel();
-            Messenger.Default.Register<AddInViewModel>(this, "Closed.Token", m => this.Close());
+            MVVM.Messenger.Default.Register<AddInViewModel>(this, "Closed.Token", m => this.Close());
+        }
+
+        private void OnClosed(object sender, EventArgs e)
+        {
+            if (this.DataContext is AddInViewModel vmodel)
+            {
+                if (vmodel.Models.Count == 0)
+                {
+                    return;
+                }
+
+                try
+                {
+                    var models = AddinAssemblyModel.Converter(vmodel.Models);
+
+                    AddinAssemblyModel.WriteModels(models);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            GlobalHelper.DeleteTemp();
+
+            if (this.DataContext is AddInViewModel vmodel)
+            {
+                if (!File.Exists(GlobalHelper.AddInManagerAssemblyFile))
+                {
+                    return;
+                }
+
+                var models = AddinAssemblyModel.ReadModels();
+
+                if (models == null || models.Count == 0)
+                {
+                    return;
+                }
+
+                vmodel.Models = AddinAssemblyModel.Converter(models);
+            }
         }
     }
 }

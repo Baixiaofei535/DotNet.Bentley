@@ -11,7 +11,7 @@ namespace AddInManager.Helper
 
         public static string AddInManagerPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AddIn Manager V1.0");
         public static string AddInManagerTempPath = Path.Combine(AddInManagerPath, "Temp");
-        public static string AddInManagerAssemblyFile = Path.Combine(AddInManagerPath, "Addin Assembly File.json");
+        public static string AddInManagerAssemblyFile = Path.Combine(AddInManagerPath, "Addin Assembly File.config");
 
 
         /// <summary>

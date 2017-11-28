@@ -11,9 +11,17 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Helper\AssemblyResolveHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\GlobalHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helper\JsonHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\AddinAssemblyModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\AddInModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MVVM\IExecuteWithObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MVVM\IMessenger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MVVM\Messenger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MVVM\ObservableObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MVVM\RelayCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MVVM\RelayCommandGeneric.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MVVM\SelectedItemBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MVVM\WeakAction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MVVM\WeakActionGeneric.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\AddInViewModel.cs" />
   </ItemGroup>
 </Project>
