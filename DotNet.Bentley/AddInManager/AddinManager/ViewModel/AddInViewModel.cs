@@ -102,7 +102,7 @@ namespace AddinManager.ViewModel
                         return;
                     }
 
-                    var types = assembly.GetExportedTypes().Where(x => x.GetAttribue<AddInAttribute>() != null && x.GetInterface(typeof(ICommand).FullName) != null).ToList();
+                    var types = assembly.GetTypes().Where(x => x.GetAttribue<AddInAttribute>() != null && x.GetInterface(typeof(ICommand).FullName) != null).ToList();
 
                     if (types.Count == 0)
                     {
