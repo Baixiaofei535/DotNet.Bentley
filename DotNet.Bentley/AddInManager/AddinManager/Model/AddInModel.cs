@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Runtime.Serialization;
 
-namespace AddInManager.Model
+namespace AddinManager.Model
 {
     class AddInModel : AddinManager.MVVM.ObservableObject
     {

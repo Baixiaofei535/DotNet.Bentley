@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
-using AddInManager.Helper;
+using AddinManager.Helper;
 using System.Windows.Input;
 using System.Reflection;
 using Microsoft.Win32;
 using System.IO;
-using AddInManager.Model;
+using AddinManager.Model;
+using Bentley.MstnPlatformNET;
 
-namespace AddInManager.ViewModel
+namespace AddinManager.ViewModel
 {
     class AddInViewModel : AddinManager.MVVM.ObservableObject
     {
@@ -101,7 +102,7 @@ namespace AddInManager.ViewModel
                         return;
                     }
 
-                    var types = assembly.GetExportedTypes().Where(x => x.GetInterface(typeof(ICommand).FullName) != null).ToList();
+                    var types = assembly.GetExportedTypes().Where(x => x.GetAttribue<AddInAttribute>() != null && x.GetInterface(typeof(ICommand).FullName) != null).ToList();
 
                     if (types.Count == 0)
                     {

@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 
-namespace AddInManager.Model
+namespace AddinManager.Model
 {
     /// <summary>
     /// AddinAssemblyModel

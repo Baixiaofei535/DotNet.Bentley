@@ -1,6 +1,6 @@
-﻿using AddInManager.Helper;
-using AddInManager.Model;
-using AddInManager.ViewModel;
+﻿using AddinManager.Helper;
+using AddinManager.Model;
+using AddinManager.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;

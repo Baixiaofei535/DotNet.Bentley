@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 
-namespace AddInManager.Helper
+namespace AddinManager.Helper
 {
     class AssemblyResolveHelper
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace AddInManager.Helper
+namespace AddinManager.Helper
 {
     static class GlobalHelper
     {

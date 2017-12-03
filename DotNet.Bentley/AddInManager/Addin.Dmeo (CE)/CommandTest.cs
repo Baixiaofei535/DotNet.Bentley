@@ -11,6 +11,7 @@ using System.Windows.Input;
 
 namespace Addin.Dmeo
 {
+    [AddIn]
     public class CommandTest : ICommand
     {
         public event EventHandler CanExecuteChanged;
@@ -47,6 +48,22 @@ namespace Addin.Dmeo
             {
                 MessageBox.Show(string.Format("当前已选择 {0} 个元素...", currentSet.Count));
             }
+        }
+    }
+
+    [AddIn]
+    public class CommandTest1 : ICommand
+    {
+        public event EventHandler CanExecuteChanged;
+
+        public bool CanExecute(object parameter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Execute(object parameter)
+        {
+            System.Windows.Forms.MessageBox.Show("OK");
         }
     }
 }
