@@ -31,6 +31,12 @@ namespace AddinManager.Model
         /// </summary>
         public static void WriteModels(List<AddinAssemblyModel> model)
         {
+            if (model.Count == 0)
+            {
+                File.WriteAllText(Helper.GlobalHelper.AddInManagerAssemblyFile, "");
+                return;
+            }
+
             var array = new string[model.Count];
 
             for (int i = 0; i < model.Count; i++)

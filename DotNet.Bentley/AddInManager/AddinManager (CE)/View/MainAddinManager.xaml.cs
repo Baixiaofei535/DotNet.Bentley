@@ -37,6 +37,7 @@ namespace AddinManager.View
             {
                 if (vmodel.Models.Count == 0)
                 {
+                    File.WriteAllText(Helper.GlobalHelper.AddInManagerAssemblyFile, "");
                     return;
                 }
 
