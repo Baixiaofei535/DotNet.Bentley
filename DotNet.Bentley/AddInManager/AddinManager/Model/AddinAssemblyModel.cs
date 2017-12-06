@@ -33,18 +33,18 @@ namespace AddinManager.Model
         {
             var array = new string[model.Count];
 
-            foreach (var item in model)
+            for (int i = 0; i < model.Count; i++)
             {
                 var builder = new System.Text.StringBuilder();
 
-                builder.Append(item.Path);
+                builder.Append(model[i].Path);
 
-                foreach (var type in item.Types)
+                foreach (var type in model[i].Types)
                 {
                     builder.Append(string.Format(";{0}", type));
                 }
 
-                array[0] = builder.ToString();
+                array[i] = builder.ToString();
             }
 
             File.WriteAllLines(Helper.GlobalHelper.AddInManagerAssemblyFile, array);
