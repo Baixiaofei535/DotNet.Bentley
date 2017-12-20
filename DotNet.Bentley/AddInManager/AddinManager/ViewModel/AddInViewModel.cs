@@ -185,10 +185,6 @@ namespace AddinManager.ViewModel
 
                 method.Invoke(instance, new object[] { null });
             }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show(ex.Message);
-            }
             finally
             {
                 assemblyResolveHelper?.UnRegistered();
