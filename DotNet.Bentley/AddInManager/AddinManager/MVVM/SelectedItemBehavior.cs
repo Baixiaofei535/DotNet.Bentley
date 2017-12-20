@@ -17,8 +17,10 @@ namespace AddinManager.MVVM
 
         private static void OnSelectedItemChanged(System.Windows.DependencyObject sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
-            if (e.NewValue is System.Windows.Controls.TreeViewItem item)
+            if (e.NewValue is System.Windows.Controls.TreeViewItem)
             {
+                var item = e.NewValue as System.Windows.Controls.TreeViewItem;
+
                 item.SetValue(System.Windows.Controls.TreeViewItem.IsSelectedProperty, true);
             }
         }

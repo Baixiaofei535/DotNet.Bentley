@@ -322,11 +322,16 @@ namespace AddinManager.MVVM
             {
                 foreach (var item in lists[messageType])
                 {
-                    if (item.Action is WeakAction<TMessage> weakActionCasted && recipient == weakActionCasted.Target
-                        && (action == null || action.Method.Name == weakActionCasted.MethodName)
-                        && (token == null || token.Equals(item.Token)))
+                    if (item.Action is WeakAction<TMessage>)
                     {
-                        item.Action.MarkForDeletion();
+                        var weakActionCasted = item.Action as WeakAction<TMessage>;
+
+                        if(recipient == weakActionCasted.Target 
+                            && (action == null || action.Method.Name == weakActionCasted.MethodName) 
+                            && (token == null || token.Equals(item.Token)))
+                        {
+                            item.Action.MarkForDeletion();
+                        }
                     }
                 }
             }

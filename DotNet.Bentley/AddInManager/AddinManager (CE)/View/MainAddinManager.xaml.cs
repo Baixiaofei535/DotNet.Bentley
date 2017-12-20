@@ -33,8 +33,10 @@ namespace AddinManager.View
 
         private void OnClosed(object sender, EventArgs e)
         {
-            if (this.DataContext is AddInViewModel vmodel)
+            if (this.DataContext is AddInViewModel)
             {
+                var vmodel = this.DataContext as AddInViewModel;
+
                 if (vmodel.Models.Count == 0)
                 {
                     File.WriteAllText(Helper.GlobalHelper.AddInManagerAssemblyFile, "");
@@ -58,8 +60,10 @@ namespace AddinManager.View
         {
             GlobalHelper.DeleteTemp();
 
-            if (this.DataContext is AddInViewModel vmodel)
+            if (this.DataContext is AddInViewModel)
             {
+                var vmodel = this.DataContext as AddInViewModel;
+
                 if (!File.Exists(GlobalHelper.AddInManagerAssemblyFile))
                 {
                     return;
