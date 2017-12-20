@@ -55,9 +55,9 @@ namespace AddinManager.ViewModel
         {
             this.Models = new ObservableCollection<AddInModel>();
 
-            this.Run = new AddinManager.MVVM.RelayCommand(OnRun, () => SelectedModel != null && (SelectedModel.Childs == null || SelectedModel.Childs.Count == 0));
+            this.Run = new AddinManager.MVVM.RelayCommand(OnRun, () => SelectedModel != null && SelectedModel.Childs.Count == 0);
             this.Load = new AddinManager.MVVM.RelayCommand(OnLoad);
-            this.Remove = new AddinManager.MVVM.RelayCommand(OnRemove, () => SelectedModel != null);
+            this.Remove = new AddinManager.MVVM.RelayCommand(OnRemove, () => SelectedModel != null && SelectedModel.Childs.Count > 0);
         }
 
         private void OnRemove()
@@ -65,15 +65,6 @@ namespace AddinManager.ViewModel
             if (SelectedModel.Parent == null)
             {
                 Models.Remove(SelectedModel);
-            }
-            else if (SelectedModel.Parent.Childs != null)
-            {
-                SelectedModel.Childs.Remove(SelectedModel);
-
-                if (SelectedModel.Parent.Childs.Count == 0)
-                {
-                    Models.Remove(SelectedModel.Parent);
-                }
             }
         }
 
@@ -184,6 +175,10 @@ namespace AddinManager.ViewModel
                 var instance = ctor.Invoke(null);
 
                 method.Invoke(instance, new object[] { null });
+            }
+            catch(Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
             }
             finally
             {
