@@ -35,10 +35,16 @@ namespace AddinManager.View
         {
             if (this.DataContext is AddInViewModel)
             {
+                if (!Directory.Exists(GlobalHelper.AddInManagerPath))
+                {
+                    Directory.CreateDirectory(GlobalHelper.AddInManagerPath);
+                }
+
                 var vmodel = this.DataContext as AddInViewModel;
 
                 if (vmodel.Models.Count == 0)
                 {
+                   
                     File.WriteAllText(Helper.GlobalHelper.AddInManagerAssemblyFile, "");
                     return;
                 }
