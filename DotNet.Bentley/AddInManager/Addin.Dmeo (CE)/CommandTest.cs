@@ -23,17 +23,7 @@ namespace Addin.Dmeo
 
         public void Execute(object parameter)
         {
-            try
-            {
-                var array = new double[2];
-
-                var a = array[3];
-            }
-            catch (Exception ex)
-            {
-
-               
-            }
+          
 
 
             var num = SelectionSetManager.NumSelected();
