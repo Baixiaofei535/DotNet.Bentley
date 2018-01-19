@@ -1,5 +1,6 @@
 ﻿using AddinManager.View;
 using Bentley.MstnPlatformNET;
+using Bentley.MstnPlatformNET.WPF;
 using System;
 using System.Collections.Generic;
 using System.Linq;

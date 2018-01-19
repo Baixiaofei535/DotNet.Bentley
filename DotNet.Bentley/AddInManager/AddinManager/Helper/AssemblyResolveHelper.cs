@@ -11,6 +11,13 @@ namespace AddinManager.Helper
     {
         string m_CurrentFile;
 
+        readonly static string AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+        readonly static string[] EnvironmentPaths = new string[]
+        {
+            Path.Combine(AppData,"Teigha","x64")
+        };
+
         public Assembly Registered(string file)
         {
             try
@@ -48,6 +55,16 @@ namespace AddinManager.Helper
                 if (File.Exists(file))
                 {
                     return ResolveAssembly(file);
+                }
+
+                foreach (var item in EnvironmentPaths)
+                {
+                    file = string.Format("{0}.dll", System.IO.Path.Combine(item, assemblyName.Name));
+
+                    if (File.Exists(file))
+                    {
+                        return ResolveAssembly(file);
+                    }
                 }
 
                 return null;
