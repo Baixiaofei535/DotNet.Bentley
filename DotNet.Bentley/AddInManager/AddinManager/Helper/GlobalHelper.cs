@@ -7,10 +7,16 @@ namespace AddinManager.Helper
 {
     static class GlobalHelper
     {
-        public static string WorkPath = Environment.CurrentDirectory;
+        public static string WorkPath = Path.GetDirectoryName(typeof(GlobalHelper).Assembly.Location);
 
-        public static string AddInManagerPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AddIn Manager V1.0");
+        public static string AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+        public static string AddInPath = Path.Combine(AppData, "Microstation");
+
+        public static string AddInManagerPath = Path.Combine(AppData, "AddIn Manager V1.0");
+
         public static string AddInManagerTempPath = Path.Combine(AddInManagerPath, "Temp");
+
         public static string AddInManagerAssemblyFile = Path.Combine(AddInManagerPath, "Addin Assembly File.config");
 
 
@@ -29,7 +35,7 @@ namespace AddinManager.Helper
             }
             catch (Exception ex)
             {
-                
+
             }
         }
 
@@ -80,5 +86,6 @@ namespace AddinManager.Helper
 
             return result;
         }
+
     }
 }

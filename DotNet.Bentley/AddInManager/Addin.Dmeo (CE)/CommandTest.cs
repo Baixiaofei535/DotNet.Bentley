@@ -23,9 +23,6 @@ namespace Addin.Dmeo
 
         public void Execute(object parameter)
         {
-          
-
-
             var num = SelectionSetManager.NumSelected();
 
             var currentSet = new List<Element>();

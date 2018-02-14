@@ -7,7 +7,7 @@ namespace AddinManager.Model
     /// <summary>
     /// AddinAssemblyModel
     /// </summary>
-    class AddinAssemblyModel
+    class AddInAssemblyModel
     {
         /// <summary>
         /// 路径
@@ -21,7 +21,7 @@ namespace AddinManager.Model
 
         public List<string> Types { get; set; }
 
-        public AddinAssemblyModel()
+        public AddInAssemblyModel()
         {
             this.Types = new List<string>();
         }
@@ -29,7 +29,7 @@ namespace AddinManager.Model
         /// <summary>
         /// Writes the file.
         /// </summary>
-        public static void WriteModels(List<AddinAssemblyModel> model)
+        public static void WriteModels(List<AddInAssemblyModel> model)
         {
             if (model.Count == 0)
             {
@@ -60,9 +60,9 @@ namespace AddinManager.Model
         /// Reads the models.
         /// </summary>
         /// <returns></returns>
-        public static List<AddinAssemblyModel> ReadModels()
+        public static List<AddInAssemblyModel> ReadModels()
         {
-            var result = new List<AddinAssemblyModel>();
+            var result = new List<AddInAssemblyModel>();
 
             if (!File.Exists(Helper.GlobalHelper.AddInManagerAssemblyFile))
             {
@@ -85,7 +85,7 @@ namespace AddinManager.Model
                     continue;
                 }
 
-                var model = new AddinAssemblyModel() { Path = sp[0].Trim() };
+                var model = new AddInAssemblyModel() { Path = sp[0].Trim() };
 
                 for (int i = 1; i < sp.Length; i++)
                 {
@@ -103,15 +103,15 @@ namespace AddinManager.Model
         /// </summary>
         /// <param name="models">The models.</param>
         /// <returns></returns>
-        public static List<AddinAssemblyModel> Converter(IEnumerable<AddInModel> models)
+        public static List<AddInAssemblyModel> Converter(IEnumerable<AddInModel> models)
         {
-            var result = new List<AddinAssemblyModel>();
+            var result = new List<AddInAssemblyModel>();
 
             using (var eum = models.GetEnumerator())
             {
                 while (eum.MoveNext())
                 {
-                    var model = new AddinAssemblyModel() { Path = eum.Current.Path };
+                    var model = new AddInAssemblyModel() { Path = eum.Current.Path };
 
                     if (eum.Current.Childs != null)
                     {
@@ -135,7 +135,7 @@ namespace AddinManager.Model
         /// </summary>
         /// <param name="models">The models.</param>
         /// <returns></returns>
-        public static ObservableCollection<AddInModel> Converter(IList<AddinAssemblyModel> models)
+        public static ObservableCollection<AddInModel> Converter(IList<AddInAssemblyModel> models)
         {
             var result = new ObservableCollection<AddInModel>();
 

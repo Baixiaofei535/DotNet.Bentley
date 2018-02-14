@@ -25,6 +25,7 @@ namespace AddinManager.Helper
                 AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
 
                 var newfile = GlobalHelper.CopyFileTo(file);
+
                 var result = ResolveAssembly(newfile);
 
                 m_CurrentFile = newfile;

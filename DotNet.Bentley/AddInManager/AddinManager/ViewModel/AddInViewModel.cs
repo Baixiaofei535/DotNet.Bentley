@@ -15,6 +15,7 @@ namespace AddinManager.ViewModel
     class AddInViewModel : AddinManager.MVVM.ObservableObject
     {
         private ObservableCollection<AddInModel> m_Models;
+
         private AddInModel m_SelectedModel;
 
         public ObservableCollection<AddInModel> Models

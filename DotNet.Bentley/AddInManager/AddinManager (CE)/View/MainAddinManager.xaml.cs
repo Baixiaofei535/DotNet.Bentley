@@ -51,9 +51,9 @@ namespace AddinManager.View
 
                 try
                 {
-                    var models = AddinAssemblyModel.Converter(vmodel.Models);
+                    var models = AddInAssemblyModel.Converter(vmodel.Models);
 
-                    AddinAssemblyModel.WriteModels(models);
+                    AddInAssemblyModel.WriteModels(models);
                 }
                 catch (Exception ex)
                 {
@@ -75,14 +75,14 @@ namespace AddinManager.View
                     return;
                 }
 
-                var models = AddinAssemblyModel.ReadModels();
+                var models = AddInAssemblyModel.ReadModels();
 
                 if (models == null || models.Count == 0)
                 {
                     return;
                 }
 
-                vmodel.Models = AddinAssemblyModel.Converter(models);
+                vmodel.Models = AddInAssemblyModel.Converter(models);
             }
         }
     }
