@@ -82,7 +82,7 @@ namespace AddinManager
 
                     var assembly = Assembly.LoadFrom(model.Assembly);
 
-                    var addinType = assembly.GetTypes().FirstOrDefault(x => x.IsClass && x.IsSubclassOf(typeof(AddIn)));
+                    var addinType = assembly.GetTypes().FirstOrDefault(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(typeof(AddIn)));
 
                     if (addinType == null)
                     {
